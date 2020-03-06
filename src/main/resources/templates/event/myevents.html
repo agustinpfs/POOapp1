@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>My Events</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/shards.min.css">
+    </head>
+    <body>
+    <h1 class="text-uppercase text-center">POO</h1>
+      <div class="text text-center col-md-4"> <h1 th:inline="text">User [[${#httpServletRequest.remoteUser}]]!</h1>
+         <form th:action="@{/logout}" method="post">
+            <input class="btn btn-info col-md-5  btn-sm" type="submit" value="Sign Out"/>
+        </form>
+      </div>
+      <br>
+         
+          <table class="table table-full">
+              <thead>
+                <tr>
+                  <th class="col-md-2" scope="col"><a href="/" class="btn btn-primary btn-lg" role="button">INDEX</a></th>
+                  <th scope="col"><a href="/users" class="btn btn-primary btn-lg btn-block" role="button">USERS</a></th>
+                  <th scope="col"><a href="/events" class="btn btn-primary btn-lg btn-block" role="button">EVENTS</a></th>
+                </tr>
+              </thead>
+            </table>
+		
+        <div th:switch="${events}" class="table-full">
+            
+                <div>
+                    <h2 th:case="null">No events yet!</h2>
+                    <div th:case="*">
+                        <h2 class="my-6">My Events</h2>
+                        <br>
+                        <table class="table table-full">
+                            <thead>
+                                <tr>
+                                    <th>NAME</th>
+                                    <th>EVENTDATE</th>
+                                    <th>STARTREGISTRATIONS</th>
+                                    <th>ENDREGISTRATIONS</th>
+                                    <th>CAPACITY</th>
+                                    <th>COST</th>
+                                    <th>PRIVATEEVENT</th>
+                                    <th>PLACE</th>
+                                    <th>EDIT</th>
+                                    <th>DELETE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="event : ${events}">
+                                    <td th:text="${event.eventName}"></td>
+                                    <td th:text="${#dates.format(event.eventDate, 'dd-MM-yyyy')}"></td>
+									<td th:text="${#dates.format(event.startRegistrations, 'dd-MM-yyyy')}"></td>
+									<td th:text="${#dates.format(event.endRegistrations, 'dd-MM-yyyy')}"></td>
+									<td th:text="${event.capacity}"></td>
+								    <td th:text="${event.cost > 0.0} ? ${event.cost} : 'Free'"></td>
+									<td th:text="${event.privateEvent} ? 'Private' : 'Public' "></td>
+									<td th:text="${event.place}"></td>
+									<td><a th:href="@{/invites/invite/{id}(id=${event.id})}" class="button">Invitar</a></td>
+                                    <td><a th:href="@{/events/edit/{id}(id=${event.id})}" class="btn btn-primary"><i class="fas fa-event-edit ml-2"></i>EDIT</a></td>
+                                    <td><a th:href="@{/events/delete/{id}(id=${event.id})}" class="btn btn-primary"><i class="fas fa-event-times ml-2"></i>REMOVE</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>      
+                    <p class="my-5"><a href="/events/signup" class="btn btn-primary"><i class="fas fa-event-plus ml-2"></i>ADD EVENT</a></p>
+                </div>
+            </div>
+      
+    </body>
+</html>
+
+
+<!-- 
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>My Events</title>
+</head>
+<style>
+table, th, td {
+	width: 800px;
+	border: 1px solid #000;
+}
+table {
+	text-align: center;
+}
+</style>
+<body>
+<a href="/home">Home</a>
+<div th:switch="${#lists.size(events)}">
+	<h2 th:case="'0'">No events yet!</h2>
+	<div th:case="*">
+		<h2>My Events</h2>
+		<table>
+			<thead>
+			    <tr>
+			        <th>Name</th>  
+			        <th>Date Event</th>
+			        <th>Start Registrations</th>
+			        <th>End Registrations</th>
+			        <th>Capacity</th>
+			        <th>Space Available</th>
+			        <th>Cost</th>
+			        <th>Private / Public</th>
+			    </tr>
+			</thead>
+			<tbody>
+			    <tr th:each="event : ${events}">
+			        <td th:text="${event.eventName}"></td>
+			       	<td th:text="${#dates.format(event.eventDate, 'dd-MM-yyyy')}"></td>
+					<td th:text="${#dates.format(event.startRegistrations, 'dd-MM-yyyy')}"></td>
+					<td th:text="${#dates.format(event.endRegistrations, 'dd-MM-yyyy')}"></td>
+					<td th:text="${event.capacity}"></td>
+					<td></td> Space Available
+			        <td th:text="${event.cost > 0} ? ${event.cost} : 'Free'"></td>
+					<td th:text="${event.privateEvent} ? 'Private' : 'Public' "></td>
+					<td><a th:href="@{/events/info/{id}(id=${event.id})}">Info</a></td>
+			    </tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<hr>
+ <p class="my-5"><a href="/events/signup" class="btn btn-primary"><i class="fas fa-event-plus ml-2"></i>ADD EVENT</a></p>
+</body>
+</html>
+ -->
+

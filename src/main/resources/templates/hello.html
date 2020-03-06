@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Hello World!</title>
+    </head>
+    <body>
+        <h1 class="text-uppercase">POO</h1>
+      <div class=" col-md-4"> <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+         <form th:action="@{/logout}" method="post">
+            <input class="btn btn-info col-md-5  btn-sm" type="submit" value="Sign Out"/>
+        </form>
+      </div>
+      <br>
+         
+          <table class="table table-full">
+              <thead>
+                <tr>
+                  <th class="col-md-2" scope="col"><a href="/" class="btn btn-primary btn-lg" role="button">INDEX</a></th>
+                  <th scope="col"><a href="/users" class="btn btn-primary btn-lg btn-block" role="button">USERS</a></th>
+                  <th scope="col"><a href="/events" class="btn btn-primary btn-lg btn-block" role="button">EVENTS</a></th>
+                </tr>
+              </thead>
+            </table>
+    </body>
+</html>

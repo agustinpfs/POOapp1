@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Update User</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/shards.min.css">
+    </head>
+    <body>
+      <h1 class="text-uppercase">POO</h1>
+      <div class=" col-md-4"> <h1 th:inline="text">User [[${#httpServletRequest.remoteUser}]]!</h1>
+         <form th:action="@{/logout}" method="post">
+            <input class="btn btn-info col-md-5  btn-sm" type="submit" value="Sign Out"/>
+        </form>
+      </div>
+      <br>
+         
+          <table class="table table-full">
+              <thead>
+                <tr>
+                  <th class="col-md-2" scope="col"><a href="/" class="btn btn-primary btn-lg" role="button">INDEX</a></th>
+                  <th scope="col"><a href="/users" class="btn btn-primary btn-lg btn-block" role="button">USERS</a></th>
+                  <th scope="col"><a href="/events" class="btn btn-primary btn-lg btn-block" role="button">EVENTS</a></th>
+                </tr>
+              </thead>
+            </table>
+        <div class="container my-5">
+            <h2 class="mb-5">Update Event</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="#" th:action="@{/events/update/{id}(id=${event.id})}" th:object="${event}" method="post">
+                         <div class="row">
+                        	<div class="col-md-6">
+                        		<input type="text" th:field="*{eventName}" class="form-control" id="eventName" placeholder="${event.eventName}" required>
+	                            <span th:if="${#fields.hasErrors('eventName')}" th:errors="*{eventName}" class="text-danger"></span>
+                        	</div>
+                        <div class="form-group col-md-6">
+                                <label for="eventDate" class="col-form-label">eventDate</label>
+                                <input type="date" th:field="*{eventDate}" class="form-control" id="eventDate" placeholder="${event.eventDate}" required>
+                                <span th:if="${#fields.hasErrors('eventDate')}" th:errors="*{eventDate}" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="startRegistrations" class="col-form-label">startRegistrations</label>
+                                <input type="date" th:field="*{startRegistrations}" class="form-control" id="startRegistrations" placeholder="${event.startRegistrations}" required>
+                                <span th:if="${#fields.hasErrors('startRegistrations')}" th:errors="*{startRegistrations}" class="text-danger"></span>
+                            </div>
+                             <div class="form-group col-md-6">
+                                <label for="endRegistrations" class="col-form-label">endRegistrations</label>
+                                <input type="date" th:field="*{endRegistrations}" class="form-control" id="endRegistrations" placeholder="${event.endRegistrations}" required>
+                                <span th:if="${#fields.hasErrors('endRegistrations')}" th:errors="*{endRegistrations}" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="capacity" class="col-form-label">Capacity</label>
+                                <input type="number" th:field="*{capacity}" class="form-control" id="capacity" placeholder="${event.capacity}" required>
+                                <span th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="cost" class="col-form-label">Cost</label>
+                                <input type="number" th:field="*{capacity}" class="form-control" id="cost" placeholder="${event.cost}" required>
+                                <span th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="cost" class="col-form-label">Place</label>
+                                <input type="text" th:field="*{place}" class="form-control" id="place" placeholder="${event.place}" required>
+                                <span th:if="${#fields.hasErrors('place')}" th:errors="*{place}" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                             <p>Private Event</p>
+                                <label for="privateEvent" class="col-form-label"><input type="checkbox" th:field="*{privateEvent}" class="form-control" id="yes" value="true"  placeholder="yes"> yes</label>
+                                <span th:if="${#fields.hasErrors('privateEvent')}" th:errors="*{privateEvent}" class="text-danger"></span>
+                            </div>
+          
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-5">
+                                <input type="submit" class="btn btn-primary" value="Update Evento">
+                            </div>
+                        </div>    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
